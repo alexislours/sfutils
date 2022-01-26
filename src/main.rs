@@ -1,13 +1,5 @@
 use chrono::{DateTime, NaiveDateTime, Utc};
 
-fn help() {
-    println!(
-        "usage:
-sfutils <Discord snowflake>
-    Get information about a Discord snowflake."
-    );
-}
-
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     match args.len() {
@@ -17,9 +9,10 @@ fn main() {
                 Err(_) => {
                     println!("Invalid snowflake.");
                     std::process::exit(1);
-                },
-              };
-            let msg_date: DateTime<Utc> = DateTime::from_utc(
+                }
+            };
+
+            let sf_date: DateTime<Utc> = DateTime::from_utc(
                 NaiveDateTime::from_timestamp(((sf >> 22) + 1420070400000) / 1000, 0),
                 Utc,
             );
@@ -29,7 +22,7 @@ fn main() {
             );
             println!(
                 "\x1b[0;34mDate:\x1b[0m                \x1b[0;32m{}\x1b[0m",
-                msg_date.format("%Y-%m-%d %H:%M:%S %Z")
+                sf_date.format("%Y-%m-%d %H:%M:%S %Z")
             );
             println!(
                 "\x1b[0;34mEpoch:\x1b[0m               \x1b[0;32m{}\x1b[0m",
@@ -56,4 +49,12 @@ fn main() {
             help();
         }
     }
+}
+
+fn help() {
+    println!(
+        "usage:
+sfutils <Discord snowflake>
+    Get information about a Discord snowflake."
+    );
 }
